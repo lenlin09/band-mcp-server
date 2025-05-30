@@ -20,27 +20,27 @@ This document outlines the detailed development roadmap for the Band MCP Server 
 
 ---
 
-### Step 2: OAuth 2.0 Integration
+### Step 2: Band API Integration
 **Status: Pending**
-**Estimated Time: 3-4 days**
+**Estimated Time: 2-3 days**
 
 **Tasks:**
-- [ ] Implement the OAuth 2.0 authorization code flow
-- [ ] Create endpoints to handle user authentication and token exchange
-- [ ] Store and manage access tokens securely
-- [ ] Add token refresh mechanism
-- [ ] Implement secure storage for sensitive data
+- [x] Set up Band API access token configuration
+- [ ] Implement Band API client with authentication
+- [ ] Test API connectivity with access token
+- [ ] Add error handling for API failures
+- [ ] Implement rate limiting compliance
 
 **Technical Requirements:**
-- OAuth 2.0 client implementation
-- Token storage (in-memory/database)
-- Error handling for authentication failures
-- Security best practices
+- Band API client implementation
+- Access token management
+- HTTP request handling with proper headers
+- Error handling and retry logic
 
 **Deliverables:**
-- OAuth 2.0 authentication module
-- Token management system
-- Authentication endpoints
+- Band API client module
+- Authentication configuration
+- API connectivity tests
 
 ---
 
@@ -65,48 +65,77 @@ This document outlines the detailed development roadmap for the Band MCP Server 
 
 ---
 
-### Step 4: Fetch Posts as MCP Resources
+### Step 4: Band API Data Models
 **Status: Pending**
-**Estimated Time: 4-5 days**
+**Estimated Time: 1-2 days**
+
+**Tasks:**
+- [ ] Define TypeScript interfaces for Band data
+- [ ] Create models for Band information
+- [ ] Create models for posts and media
+- [ ] Create models for albums and members
+- [ ] Add validation for API responses
+
+**Data Models:**
+- Band information structure
+- Post data with content and metadata
+- Album and photo data
+- Member and permission data
+
+**Deliverables:**
+- Complete TypeScript type definitions
+- Data validation utilities
+- API response mappers
+
+---
+
+### Step 5: Fetch Posts as MCP Resources
+**Status: Pending**
+**Estimated Time: 3-4 days**
 
 **Tasks:**
 - [ ] Design resource URI scheme for Band data
-- [ ] Use the Band API to fetch posts from a user's groups
+- [ ] Use the Band API to fetch posts from Band groups
 - [ ] Expose these posts as MCP resources with appropriate metadata
 - [ ] Implement pagination and filtering
 - [ ] Add caching mechanism for performance
 
+**Resources to Implement:**
+- `band://bands` - List accessible Bands
+- `band://posts/{band_key}` - Posts from specific Band
+- `band://albums/{band_key}` - Photo albums from Band
+- `band://members/{band_key}` - Members of Band
+
 **Technical Requirements:**
-- Band API client implementation
 - Resource schema design
 - Data transformation and formatting
-- Error handling for API failures
+- Pagination support
+- Caching for performance
 
 **Deliverables:**
-- Band API client module
 - MCP resource handlers
 - Post fetching and formatting logic
+- Resource caching system
 
 ---
 
-### Step 5: Read/Write Operations as MCP Tools
+### Step 6: Read/Write Operations as MCP Tools
 **Status: Pending**
-**Estimated Time: 5-6 days**
+**Estimated Time: 4-5 days**
 
 **Tasks:**
 - [ ] Implement MCP tools to perform read/write operations on Band data
 - [ ] Define tool schemas and handlers for operations like creating posts
-- [ ] Add tools for updating group information
-- [ ] Implement tools for managing group members
+- [ ] Add tools for retrieving Band information
 - [ ] Add validation and permission checks
+- [ ] Implement error handling and rollback
 
 **Tools to Implement:**
+- `get_band_info` - Get Band information
+- `get_band_posts` - Get posts with pagination
 - `create_post` - Create new posts in Band groups
-- `update_post` - Edit existing posts
-- `delete_post` - Remove posts
-- `get_group_info` - Retrieve group information
-- `list_groups` - List user's groups
-- `upload_media` - Upload images/files to posts
+- `get_band_albums` - Get photo albums
+- `get_band_members` - Get Band members
 
 **Technical Requirements:**
 - Tool input validation
@@ -117,11 +146,11 @@ This document outlines the detailed development roadmap for the Band MCP Server 
 **Deliverables:**
 - Complete set of MCP tools
 - Input validation and error handling
-- Permission management system
+- API integration for all tools
 
 ---
 
-### Step 6: Dockerize the MCP Server
+### Step 7: Dockerize the MCP Server
 **Status: Pending**
 **Estimated Time: 2-3 days**
 
@@ -134,7 +163,7 @@ This document outlines the detailed development roadmap for the Band MCP Server 
 
 **Technical Requirements:**
 - Multi-stage Docker build
-- Secure secret management
+- Secure environment variable management
 - Health checks
 - Production-ready configuration
 
@@ -145,13 +174,13 @@ This document outlines the detailed development roadmap for the Band MCP Server 
 
 ---
 
-### Step 7: Testing and Debugging
+### Step 8: Testing and Debugging
 **Status: Pending**
 **Estimated Time: 3-4 days**
 
 **Tasks:**
 - [ ] Test the MCP server using the MCP Inspector tool
-- [ ] Validate OAuth 2.0 flows and Band API integration
+- [ ] Validate Band API integration with real data
 - [ ] Write comprehensive unit tests
 - [ ] Add integration tests
 - [ ] Performance testing and optimization
@@ -159,8 +188,8 @@ This document outlines the detailed development roadmap for the Band MCP Server 
 
 **Testing Areas:**
 - MCP protocol compliance
-- OAuth 2.0 flow validation
 - Band API integration
+- All tools and resources
 - Error handling scenarios
 - Performance under load
 
@@ -172,7 +201,7 @@ This document outlines the detailed development roadmap for the Band MCP Server 
 
 ---
 
-### Step 8: Documentation and Deployment
+### Step 9: Documentation and Deployment
 **Status: Pending**
 **Estimated Time: 2-3 days**
 
@@ -198,18 +227,18 @@ This document outlines the detailed development roadmap for the Band MCP Server 
 
 ## Timeline
 
-**Total Estimated Time: 21-28 days**
+**Total Estimated Time: 19-27 days**
 
 ```
-Week 1: OAuth 2.0 Integration + MCP Server completion
-Week 2: MCP Resources implementation
-Week 3: MCP Tools implementation
-Week 4: Testing, Documentation, and Deployment
+Week 1: Band API Integration + Data Models + MCP Server completion
+Week 2: MCP Resources + Tools implementation
+Week 3: Docker + Testing
+Week 4: Documentation and Deployment
 ```
 
 ## Success Criteria
 
-- [ ] Successful OAuth 2.0 authentication with Band API
+- [ ] Successful Band API integration with access token
 - [ ] All MCP resources working correctly
 - [ ] All MCP tools functional and tested
 - [ ] Docker deployment working
@@ -219,15 +248,15 @@ Week 4: Testing, Documentation, and Deployment
 
 ## Risk Mitigation
 
-1. **Band API Changes**: Monitor Band API updates and maintain compatibility
-2. **OAuth 2.0 Complexity**: Start with basic flow, add advanced features incrementally
+1. **Band API Rate Limits**: Implement proper rate limiting and caching
+2. **Access Token Security**: Secure token storage and validation
 3. **MCP Protocol Updates**: Stay updated with MCP specification changes
-4. **Performance Issues**: Implement caching and rate limiting early
-5. **Security Concerns**: Regular security reviews and best practices implementation
+4. **Performance Issues**: Implement caching and optimization early
+5. **API Changes**: Monitor Band API updates and maintain compatibility
 
 ## Next Steps
 
-1. Begin Step 2: OAuth 2.0 Integration
+1. Begin Step 2: Band API Integration
 2. Set up development environment for Band API testing
-3. Create test Band application for OAuth credentials
-4. Start implementing authentication flow
+3. Obtain Band API access token for testing
+4. Start implementing Band API client
