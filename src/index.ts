@@ -6,6 +6,7 @@ import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
 } from '@modelcontextprotocol/sdk/types.js';
+import { bandTools, handleToolCall } from './mcp/tools.js';
 
 const server = new Server(
   {
@@ -19,51 +20,19 @@ const server = new Server(
   }
 );
 
-// List available tools
 server.setRequestHandler(ListToolsRequestSchema, async () => {
   return {
-    tools: [
-      {
-        name: "hello_world",
-        description: "返回Hello World问候消息",
-        inputSchema: {
-          type: "object",
-          properties: {
-            name: {
-              type: "string",
-              description: "要问候的名字（可选）",
-              default: "World"
-            }
-          }
-        }
-      }
-    ],
+    tools: bandTools,
   };
 });
 
-// Handle tool calls
 server.setRequestHandler(CallToolRequestSchema, async (request) => {
   const { name, arguments: args } = request.params;
-  
-  switch (name) {
-    case "hello_world":
-      const targetName = args?.name || "World";
-      return {
-        content: [{
-          type: "text",
-          text: `Hello, ${targetName}! 这是来自Band MCP Server的问候 🎵`
-        }]
-      };
-    
-    default:
-      throw new Error(`Unknown tool: ${name}`);
-  }
+  return await handleToolCall(name, args);
 });
 
 async function main(): Promise<void> {
-  const transport = new StdioServerTransport();
-  await server.connect(transport);
-  console.error('Band MCP server running on stdio');
+  await server.connect(new StdioServerTransport());
 }
 
 main().catch((error) => {
