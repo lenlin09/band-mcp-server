@@ -6,7 +6,7 @@ import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
 } from '@modelcontextprotocol/sdk/types.js';
-import { bandTools, handleToolCall } from './mcp/tools.js';
+import { bandTools, handleToolCall } from './tools.js';
 
 const server = new Server(
   {

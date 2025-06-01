@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
-import { bandConfig, BandUserProfile } from '../config/band.js';
+import { bandConfig } from './config.js';
 
 export class BandApiClient {
   private httpClient: AxiosInstance;
@@ -34,19 +34,13 @@ export class BandApiClient {
     );
   }
 
-  /**
-   * Get user information
-   * @see https://developers.band.us/develop/guide/api/get_user_information
-   */
-  async getUserInformation(band_key: string): Promise<BandUserProfile> {
-    try {
-      const response = await this.httpClient.get<BandUserProfile>(
-        '/v2/profile', band_key ? { params: { band_key } } : {}
-      );
-      return response.data;
-    } catch (error) {
-      throw error;
-    }
+  public get<T>(url: string, params?: Record<string, any>): Promise<T> {
+    return this.httpClient.get<T>(url, { params })
+      .then(response => response.data)
+      .catch(error => {
+        console.error('GET request failed:', error);
+        throw error;
+      });
   }
 }
 
