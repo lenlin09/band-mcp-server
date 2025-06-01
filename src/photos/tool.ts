@@ -18,7 +18,6 @@ export const ToolDefinition : Tool = {
             },
             photo_album_key: {
                 type: "string",
-                required: false,
                 title: "Photo Album Key",
                 description: "photo album identifier"
             }

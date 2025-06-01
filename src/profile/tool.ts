@@ -13,9 +13,7 @@ export const ToolDefinition : Tool = {
         properties: {
         band_key: {
             type: "string",
-            required: false,
             title: "Band Key",
-            default: "",
             description: "Band ID to get the user's profile from a specific band. If not provided, the default profile of the user will be returned."
         }
         },
@@ -66,10 +64,12 @@ interface BandUserProfile {
   message_allowed: boolean;
 }
 
-export async function handleToolCall(band_key: string) {
+export async function handleToolCall(band_key?: string) {
+    const params: Record<string, any> = {};
+    if (band_key) params.band_key = band_key;
     const profile = await bandApiClient.get<BandUserProfile>(
         '/v2/profile', 
-        {band_key}
+        params
     );
     return {
         content: [{

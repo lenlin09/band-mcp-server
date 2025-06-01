@@ -62,7 +62,7 @@ export async function handleToolCall(band_key: string, content: string, do_push?
     const params: Record<string, any> = { band_key, content };
     if (do_push !== undefined)  params.do_push = do_push;
     const postData = await bandApiClient.post<WritePostResponse>(
-        '/v2.1/band/post/create',
+        '/v2.2/band/post/create',
         params
     );
     return {

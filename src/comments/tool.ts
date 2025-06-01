@@ -23,7 +23,6 @@ export const ToolDefinition : Tool = {
             },
             sort: {
                 type: "string",
-                required: false,
                 title: "Sort",
                 description: "sort order for comments"
             }

@@ -18,20 +18,17 @@ export const ToolDefinition : Tool = {
             },
             locale: {
                 type: "string",
-                required: true,
                 default: "ja_JP",
                 title: "Locale",
                 description: "Region and language"
             },
             after: {
                 type: "string",
-                required: false,
                 title: "After",
                 description: "for paging"
             },
             limit: {
                 type: "number",
-                required: false,
                 title: "Limit", 
                 default: 20,
                 description: "number of posts to load. min: 1, max: 100, default: 20"
