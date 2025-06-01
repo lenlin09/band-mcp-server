@@ -7,6 +7,8 @@ import comments from './comments/index.js';
 import permissions from './permissions/index.js';
 import albums from './albums/index.js';
 import photos from './photos/index.js';
+import writeComment from './writeComment/index.js';
+import writePost from './writePost/index.js';
 
 export const bandTools: Tool[] = [
   profile.ToolDefinition,
@@ -16,7 +18,9 @@ export const bandTools: Tool[] = [
   comments.ToolDefinition,
   permissions.ToolDefinition,
   albums.ToolDefinition,
-  photos.ToolDefinition
+  photos.ToolDefinition,
+  writeComment.ToolDefinition,
+  writePost.ToolDefinition
 ];
 
 export function handleToolCall(name: string, args: any) {
@@ -38,6 +42,10 @@ export function handleToolCall(name: string, args: any) {
         return albums.handleToolCall(args.band_key);
       case "get_photos":
         return photos.handleToolCall(args.band_key, args.photo_album_key);
+      case "write_comment":
+        return writeComment.handleToolCall(args.band_key, args.post_key, args.body);
+      case "write_post":
+        return writePost.handleToolCall(args.band_key, args.content, args.do_push);
       default:
         throw new Error(`Unknown tool: ${name}`);
     }

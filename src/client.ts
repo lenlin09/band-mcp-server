@@ -42,6 +42,16 @@ export class BandApiClient {
         throw error;
       });
   }
+
+  public post<T>(url: string, data?: Record<string, any>): Promise<T> {
+    return this.httpClient.post<T>(url, data)
+      .then(response => response.data)
+      .catch(error => {
+        console.error('POST request failed:', error);
+        throw error;
+      });
+  }
+  
 }
 
 // Singleton instance
