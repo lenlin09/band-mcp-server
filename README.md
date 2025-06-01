@@ -40,7 +40,7 @@ make install
 # Build the project
 make build
 
-# Config Claude desktop with this json
+# Config MCP client with this json
 {
   "mcpServers": {
     "band-mcp-server": {
@@ -48,7 +48,6 @@ make build
       "args": [
         "/path/to/your/band-mcp-server/dist/index.js"
       ],
-      "cwd": "/path/to/your/band-mcp-server",
       "env": {
         "BAND_ACCESS_TOKEN": "your_band_access_token"
       }
@@ -72,7 +71,16 @@ The Band MCP Server consists of several key components:
 The server exposes the following MCP capabilities:
 
 ### Tools
-- `get_band_profile` - Get profile information of a Band
+- `get_user_information` - Get user profile information for a Band
+- `get_bands` - Get list of Bands the authenticated user belongs to
+- `get_posts` - Get posts from a specific Band with pagination support
+- `get_post` - Get detailed information about a specific post
+- `get_comments` - Get comments for a specific post with sorting options
+- `permissions` - Check user permissions for a specific Band
+- `get_albums` - Get photo albums in a Band
+- `get_photos` - Get photos from a specific album
+- `write_comment` - Add a comment to a post
+- `write_post` - Create a new post in a Band
 
 ## References
 
