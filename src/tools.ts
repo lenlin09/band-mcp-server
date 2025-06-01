@@ -1,19 +1,23 @@
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
 import profile from './profile/index.js';
 import bands from './bands/index.js';
+import posts from './posts/index.js';
 
 export const bandTools: Tool[] = [
   profile.ToolDefinition,
-  bands.ToolDefinition
+  bands.ToolDefinition,
+  posts.ToolDefinition
 ];
 
 export function handleToolCall(name: string, args: any) {
   try {
     switch (name) {
-      case "get_band_user_profile":
-        return profile.handleToolCall(args);
-      case "get_user_bands":
+      case "get_user_information":
+        return profile.handleToolCall(args.band_key);
+      case "get_bands":
         return bands.handleToolCall();
+      case "get_posts":
+        return posts.handleToolCall(args.band_key, args.locale, args.after, args.limit);
       default:
         throw new Error(`Unknown tool: ${name}`);
     }

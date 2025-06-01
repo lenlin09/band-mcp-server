@@ -6,7 +6,7 @@ import { bandApiClient } from '../client.js';
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
 
 export const ToolDefinition : Tool = {
-    name: "get_user_bands",
+    name: "get_bands",
     description: "Get the list of bands that the user joined from BAND.",
     inputSchema: {
         type: "object",

@@ -6,7 +6,7 @@ import { bandApiClient } from '../client.js';
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
 
 export const ToolDefinition : Tool = {
-    name: "get_band_user_profile",
+    name: "get_user_information",
     description: "Get user profile information from BAND. Optionally specify a band_key to get user info within a specific band context.",
     inputSchema: {
         type: "object",
@@ -66,7 +66,7 @@ interface BandUserProfile {
   message_allowed: boolean;
 }
 
-export async function handleToolCall(band_key = "") {
+export async function handleToolCall(band_key: string) {
     const profile = await bandApiClient.get<BandUserProfile>(
         '/v2/profile', {band_key}
     );
