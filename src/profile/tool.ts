@@ -68,7 +68,8 @@ interface BandUserProfile {
 
 export async function handleToolCall(band_key: string) {
     const profile = await bandApiClient.get<BandUserProfile>(
-        '/v2/profile', {band_key}
+        '/v2/profile', 
+        {band_key}
     );
     return {
         content: [{
