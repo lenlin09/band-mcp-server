@@ -10,7 +10,8 @@ export class BandApiClient {
       timeout: 10000,
       headers: {
         'Authorization': `Bearer ${bandConfig.accessToken}`,
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
       },
     });
 
@@ -44,8 +45,7 @@ export class BandApiClient {
   }
 
   public post<T>(url: string, data?: Record<string, any>): Promise<T> {
-    return this.httpClient.post<T>(url, data)
-      .then(response => response.data)
+    return this.httpClient.post<T>(url, data).then(response => response.data)
       .catch(error => {
         console.error('POST request failed:', error);
         throw error;
