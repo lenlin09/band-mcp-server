@@ -81,6 +81,8 @@ The server exposes the following MCP capabilities:
 - `get_photos` - Get photos from a specific album
 - `write_comment` - Add a comment to a post
 - `write_post` - Create a new post in a Band
+- `remove_comment` - Delete a comment from a post
+- `remove_post` - Delete a post from a Band
 
 ## References
 
