@@ -22,12 +22,40 @@ This project aims to build a Model Context Protocol (MCP) server that integrates
 
 ### Prerequisites
 
-- Node.js 18+ installed
+- Node.js 23.11.0+ installed
 - TypeScript knowledge
 - Basic knowledge of Docker and containerization
 - Band API access token (obtainable from [Band Developer Portal](https://developers.band.us))
 
 ### Installation
+
+#### Option 1: Using Docker (Recommended)
+
+```bash
+# Pull the latest image from GitHub Container Registry
+docker pull ghcr.io/USERNAME/band-mcp-server:latest
+
+# Run the container with your Band access token
+docker run --rm -it \
+  -e BAND_ACCESS_TOKEN="your_band_access_token" \
+  ghcr.io/USERNAME/band-mcp-server:latest
+
+# For MCP client configuration, use:
+{
+  "mcpServers": {
+    "band-mcp-server": {
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "-e", "BAND_ACCESS_TOKEN=your_band_access_token",
+        "ghcr.io/USERNAME/band-mcp-server:latest"
+      ]
+    }
+  }
+}
+```
+
+#### Option 2: Local Development
 
 ```bash
 # Clone the repository
@@ -40,7 +68,10 @@ make install
 # Build the project
 make build
 
-# Config MCP client with this json
+# Run locally
+BAND_ACCESS_TOKEN="your_token" node dist/index.js
+
+# Or for MCP client configuration:
 {
   "mcpServers": {
     "band-mcp-server": {
@@ -56,6 +87,19 @@ make build
 }
 ```
 
+### Docker Development
+
+```bash
+# Build Docker image locally
+make docker-build
+
+# Run Docker container locally
+make docker-run
+
+# Available Docker commands:
+make help  # Show all available commands
+```
+
 ## Architecture
 
 The Band MCP Server consists of several key components:
@@ -65,6 +109,42 @@ The Band MCP Server consists of several key components:
 - **Band API Client**: Interfaces with the Band API
 - **Resource Handlers**: Exposes Band data as MCP resources
 - **Tool Handlers**: Implements read/write operations as MCP tools
+
+## CI/CD and Docker
+
+### Automated Builds
+
+This project uses GitHub Actions for continuous integration and deployment:
+
+- **Automatic Docker builds**: Every push to `main`/`master` branch triggers a Docker build
+- **Multi-platform support**: Builds for both `linux/amd64` and `linux/arm64`
+- **GitHub Container Registry**: Images are automatically published to `ghcr.io`
+- **Version tagging**: Git tags create versioned Docker images
+
+### Docker Image Tags
+
+- `latest` - Latest build from main branch
+- `v1.0.0` - Specific version tags
+- `main` - Latest main branch build
+
+### Using Pre-built Images
+
+The easiest way to use this MCP server is with the pre-built Docker images:
+
+```bash
+# Pull and run the latest version
+docker pull ghcr.io/YOUR_USERNAME/band-mcp-server:latest
+docker run --rm -it -e BAND_ACCESS_TOKEN="your_token" ghcr.io/YOUR_USERNAME/band-mcp-server:latest
+```
+
+### Development Workflow
+
+1. Fork the repository
+2. Make your changes
+3. Push to your fork
+4. GitHub Actions will build and test your changes
+5. Create a pull request
+6. Once merged, a new Docker image will be built automatically
 
 ## Usage
 
