@@ -35,12 +35,6 @@ docker-run:
 		-p 3000:3000 \
 		band-mcp-server:latest
 
-docker-push:
-	@echo "Please use GitHub Actions to push to ghcr.io"
-	@echo "Or manually tag and push:"
-	@echo "  docker tag band-mcp-server:latest ghcr.io/USERNAME/band-mcp-server:latest"
-	@echo "  docker push ghcr.io/USERNAME/band-mcp-server:latest"
-
 # Test command (placeholder)
 test:
 	@echo "Running tests..."
